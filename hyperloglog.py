@@ -10,8 +10,11 @@ class HyperLogLog:
         
     def offer(self, o):
         x = mmhash(str(o), 0)
-        i = x >> (32-self.log2m)
-        v = self._bitscan((x << self.log2m) | ((1 << self.log2m)- 1))
+
+        a, b = 32-self.log2m, self.log2m
+
+        i = x >> a
+        v = self._bitscan(x << b, a)
         
         self.data[i] = max(self.data[i], v)
         
@@ -23,10 +26,9 @@ class HyperLogLog:
         else:
             return round(estimate)
         
-    def _bitscan(self, x):
-        if x==0: return 33
+    def _bitscan(self, x, m):
         v = 1
-        while not x&0x80000000:
+        while v<=m and not x&0x80000000:
             v+=1
             x<<=1
         return v
