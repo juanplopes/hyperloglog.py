@@ -19,10 +19,10 @@ class HyperLogLog:
         self.data[i] = max(self.data[i], v)
         
     def count(self):
-        estimate = self.alphaMM * (1.0 / sum([2**-v for v in self.data]))
+        estimate = self.alphaMM / sum([2**-v for v in self.data])
         if estimate <= 2.5 * self.m:
-            z = float(self.data.count(0))
-            return round(-self.m * log(z / self.m))
+            zeros = float(self.data.count(0))
+            return round(-self.m * log(zeros / self.m))
         else:
             return round(estimate)
         
