@@ -1,0 +1,5 @@
+HyperLogLog python impl
+
+MurmurHash3-32 pure python impl is from:
+
+https://github.com/dcreager/libcork/blob/b1619654dfd572fef2331e4273c940970c814968/extras/hashstring.py
