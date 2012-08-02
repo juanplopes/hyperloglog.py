@@ -1,5 +1,7 @@
 from mmhash import mmhash
 from math import log
+from zlib import compress
+from base64 import b64encode
 
 class HyperLogLog:
     def __init__(self, log2m):
@@ -32,3 +34,7 @@ class HyperLogLog:
             v+=1
             x<<=1
         return v
+        
+    def datastr(self):
+        return b64encode(compress(str.join('', map(chr, self.data)), 9))
+

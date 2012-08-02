@@ -23,7 +23,9 @@ class TestHyperLogLog(unittest.TestCase):
         estimate = hll.count()
         error = abs(estimate/float(set_size) - 1)
         
-        print 'e', estimate, error
+        strdata = hll.datastr()
+        print 'e', estimate, error, 1<<m, len(strdata)
+        self.assertLess(len(hll.datastr()), 1<<m)
         self.assertLess(error, p)
         
     
